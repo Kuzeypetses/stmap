@@ -1,4 +1,4 @@
-KUZEY PET TURKIYE ST BOLGE HARITASI - V3 REV4
+KUZEY PET TURKIYE ST BOLGE HARITASI - V3 REV6
 
 ONLINE KULLANIM (ONERILEN)
 - index.html, assets/ ve data/ klasorlerini birlikte yayinlayin.
@@ -8,12 +8,18 @@ ONLINE KULLANIM (ONERILEN)
 - Yenile butonu, mevcut harita zoom/merkezini ve acik popup/musteri ekranini koruyarak Excel'i yeniden okur.
 - Arka plandaki Excel guncelleme kontrolu de kullanicinin harita zoom/merkezini degistirmez.
 
+MUSTERI ARA
+- Ust bardaki "Musteri Ara" alanina musteri adinin bir bolumunu yazin.
+- Sonuclarda musteri adi ile birlikte ilgili ST, sehir ve ilce gorunur.
+- Sonuca tiklandiginda ST filtresi otomatik secilir, harita ilgili ST'nin musteri sehrindeki pinine gider ve ST popup'i acilir.
+- Enter tusu ilk arama sonucunu acar.
+
 MOBIL/TABLET
-- Ust bar responsive olarak iki satira yerlesir.
-- Logo, ST secimi ve Yenile butonu ekran genisligine gore boyutlanir.
+- Ust bar responsive yapisini korur; ST secimi, Musteri Ara ve Yenile alanlari ekran genisligine gore yerlesir.
 - Harita/popup/musteri listesi mobil ve tablette kullanilabilir kalir.
 
 ONEMLI
 - Deploy etmeden once data/MAPLIST.xlsx dosyasini kendi EN GUNCEL Excel dosyanizla degistirin.
 
-REV5: Popup ve müşteri listesi açılırken harita kamera/zoom hareketi engellendi; tasarım değişmedi.
+REV5: Popup ve musteri listesi acilirken harita kamera/zoom hareketi engellendi; tasarim degismedi.
+REV6: Ust bara Musteri Ara eklendi; arama sonucu ilgili ST'ye ve musteri sehrindeki pine yonlendirir.

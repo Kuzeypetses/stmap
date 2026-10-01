@@ -24,8 +24,9 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
 @media(max-width:800px){header{padding:8px 13px;min-height:78px}.separator,.sub,.stat:nth-child(2){display:none}.logo{width:64px;height:64px;flex-basis:64px}.header-actions .stat{display:none}.leaflet-popup-content{width:320px!important}.info{left:10px;bottom:10px}.modal{padding:9px}.modal-card{width:100%;height:94vh}.customers th,.customers td{padding:9px 8px}.search-wrap{flex-direction:column;align-items:stretch}.result-count{text-align:right}}
 
 .filter-box{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 11px;border:1px solid rgba(255,255,255,.18);border-radius:11px;background:rgba(255,255,255,.08);white-space:nowrap}.filter-box span{font-size:10px;font-weight:850;opacity:.8;text-transform:uppercase;letter-spacing:.45px}.filter-box select{min-width:220px;max-width:280px;border:0;outline:0;border-radius:8px;padding:8px 30px 8px 10px;background:#fff;color:var(--navy);font-size:12px;font-weight:800;cursor:pointer}.filter-box select option{color:#152033}.filter-note{font-size:10px;opacity:.72}
-@media(max-width:1050px){.filter-box span{display:none}.filter-box select{min-width:180px;max-width:220px}}
-@media(max-width:800px){.filter-box{width:46vw;max-width:230px;padding:4px}.filter-box select{min-width:0;width:100%;max-width:none;padding:7px 24px 7px 8px}.header-actions{flex-wrap:nowrap}.refresh{display:none}}
+.customer-lookup{position:relative;overflow:visible}.customer-lookup input{min-width:220px;max-width:300px;border:0;outline:0;border-radius:8px;padding:8px 10px;background:#fff;color:var(--navy);font-size:12px;font-weight:800}.customer-lookup input::placeholder{color:#7b8798;font-weight:700}.customer-lookup-results{position:absolute;top:calc(100% + 7px);right:0;z-index:3200;width:min(430px,calc(100vw - 24px));max-height:330px;overflow:auto;display:none;background:#fff;color:var(--ink);border:1px solid #dce3eb;border-radius:12px;box-shadow:0 16px 42px rgba(8,29,58,.25);padding:5px}.customer-lookup-results.show{display:block}.customer-lookup-item{width:100%;display:block;border:0;background:#fff;text-align:left;padding:10px 11px;border-radius:9px;cursor:pointer;color:var(--ink)}.customer-lookup-item:hover,.customer-lookup-item:focus{background:#f2f5f9;outline:0}.customer-lookup-item b{display:block;font-size:12px;line-height:1.35;color:var(--navy);white-space:normal}.customer-lookup-item small{display:block;margin-top:3px;font-size:10px;color:#66758a;line-height:1.35;white-space:normal}.customer-lookup-empty{padding:12px 11px;font-size:11px;color:#718096;text-align:center}
+@media(max-width:1050px){.filter-box span{display:none}.filter-box select{min-width:180px;max-width:220px}.customer-lookup input{min-width:180px;max-width:220px}}
+@media(max-width:800px){.filter-box{width:46vw;max-width:230px;padding:4px}.filter-box select{min-width:0;width:100%;max-width:none;padding:7px 24px 7px 8px}.customer-lookup{width:46vw;max-width:230px}.customer-lookup input{min-width:0;width:100%;max-width:none;padding:7px 8px}.customer-lookup-results{right:0;width:min(390px,calc(100vw - 16px))}.header-actions{flex-wrap:nowrap}.refresh{display:none}}
 
 .loading-screen{position:fixed;inset:0;z-index:12000;background:radial-gradient(circle at 50% 42%,#123b70 0,#0b2a52 34%,#081d3a 68%,#06152b 100%);display:flex;align-items:center;justify-content:center;opacity:1;visibility:visible;transition:opacity .45s ease,visibility .45s ease}
 .loading-screen.hide{opacity:0;visibility:hidden;pointer-events:none}.loading-inner{width:min(520px,86vw);text-align:center;color:#fff;padding:24px}.loading-logo{width:min(330px,72vw);height:auto;display:block;margin:0 auto 28px;filter:drop-shadow(0 18px 38px rgba(0,0,0,.38));animation:loadingFloat 1.8s ease-in-out infinite}.loading-text{font-size:13px;font-weight:850;letter-spacing:.35px;opacity:.92;margin-bottom:14px}.loading-progress{width:min(330px,72vw);height:7px;margin:0 auto;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.loading-progress span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#fff,#d71920);box-shadow:0 0 14px rgba(215,25,32,.5)}.loading-screen.run .loading-progress span{animation:loadingProgress 4s linear forwards}.loading-dots{display:flex;justify-content:center;gap:6px;margin-top:14px}.loading-dots i{width:6px;height:6px;border-radius:50%;background:#fff;opacity:.35;animation:loadingDot 1.2s infinite}.loading-dots i:nth-child(2){animation-delay:.15s}.loading-dots i:nth-child(3){animation-delay:.3s}.copyright{position:fixed;right:14px;bottom:10px;z-index:850;font-size:11px;font-weight:750;color:#fff;background:rgba(8,29,58,.82);border:1px solid rgba(255,255,255,.22);padding:7px 10px;border-radius:999px;backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(8,29,58,.18);pointer-events:none}
@@ -48,11 +49,12 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   .separator{display:block;width:1px;height:38px;flex:0 0 1px}
   h1{font-size:clamp(14px,3.9vw,18px);line-height:1.12;white-space:normal;overflow:visible;text-overflow:clip}
   .sub{display:none}
-  .header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;flex-wrap:nowrap;justify-content:stretch}
+  .header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;align-items:center;gap:7px;flex-wrap:nowrap;justify-content:stretch}
   .header-actions .stat{display:none}
-  .filter-box{width:100%;max-width:none;min-width:0;padding:4px 5px}
-  .filter-box span{display:none}
-  .filter-box select{width:100%;min-width:0;max-width:none;padding:8px 28px 8px 9px}
+  .filter-box,.customer-lookup{width:100%;max-width:none;min-width:0;padding:4px 5px}
+  .filter-box span,.customer-lookup span{display:none}
+  .filter-box select,.customer-lookup input{width:100%;min-width:0;max-width:none;padding:8px 28px 8px 9px}
+  .customer-lookup input{padding-right:9px}
   .refresh{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 12px;white-space:nowrap}
   .leaflet-popup-content{width:min(330px,calc(100vw - 36px))!important;max-width:calc(100vw - 36px)}
   .info{left:8px;right:8px;bottom:36px;max-width:none;padding:7px 9px;font-size:10px;line-height:1.35;max-height:64px;overflow:auto}
@@ -71,7 +73,8 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   .logo{width:50px;height:50px;flex-basis:50px}
   .separator{height:32px}
   h1{font-size:14px;letter-spacing:.15px}
-  .filter-box select{font-size:11px;padding-top:7px;padding-bottom:7px}
+  .filter-box select,.customer-lookup input{font-size:11px;padding-top:7px;padding-bottom:7px}
+  .customer-lookup-results{position:fixed;left:8px;right:8px;width:auto;max-height:42vh}
   .refresh{font-size:11px;min-height:34px;padding:7px 10px}
   .pophead{padding:11px;gap:10px}
   .portrait-wrap{width:62px;height:62px;flex-basis:62px;border-radius:12px}
@@ -103,6 +106,7 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   <div class="brand"><div class="logo"><img src="assets/turkiye-st-bolge-haritasi.png" alt="Türkiye ST Bölge Haritası"></div><div class="separator"></div><div><h1>TÜRKİYE ST BÖLGE HARİTASI</h1><div class="sub">Canlı data/MAPLIST.xlsx • Satış Temsilcisi Hizmet Bölgeleri</div></div></div>
   <div class="header-actions">
     <label class="filter-box"><span>Satış Temsilcisi</span><select id="repFilter"><option value="">Tüm Satış Temsilcileri</option></select></label>
+    <div class="filter-box customer-lookup"><span>Müşteri Ara</span><input id="customerLookup" type="search" placeholder="Müşteri Ara" autocomplete="off" spellcheck="false"><div id="customerLookupResults" class="customer-lookup-results" role="listbox" aria-label="Müşteri arama sonuçları"></div></div>
     <div class="stat">Temsilci <b id="repCount">—</b></div><div class="stat">Şehir <b id="cityCount">—</b></div><div class="stat">Müşteri <b id="customerCount">—</b></div>
     <button class="refresh" id="refreshBtn">Yenile</button>
   </div>
@@ -150,6 +154,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,att
 const markerLayer=L.layerGroup().addTo(map);
 const statusbar=document.getElementById('statusbar');
 const repFilter=document.getElementById('repFilter');
+const customerLookup=document.getElementById('customerLookup');
+const customerLookupResults=document.getElementById('customerLookupResults');
+let customerLookupRows=[];
 function status(msg,type='ok',ms=2200){statusbar.textContent=msg;statusbar.className='statusbar show'+(type==='error'?' error':'');if(ms)setTimeout(()=>statusbar.className='statusbar',ms)}
 const loadingScreen=document.getElementById('loadingScreen');
 const loadingText=document.getElementById('loadingText');
@@ -196,7 +203,27 @@ function buildEmbedded(){
   state.customers=EMBEDDED_CUSTOMERS.map(r=>({rep:r[0],code:r[1],name:r[2],group:r[3],extra:r[4],city:trUpper(r[5]),district:r[6]})).filter(x=>x.rep&&x.city);
   state.phoneMap=new Map(EMBEDDED_PHONES.map(r=>[norm(r[0]),r[1]]));state.photoMap=new Map(Object.entries(EMBEDDED_PHOTOS).map(([k,v])=>[norm(k),v]));regroupState();populateRepFilter();renderMap(true);
 }
-function populateRepFilter(){const current=repFilter.value;const reps=[...new Map(state.customers.map(c=>[norm(c.rep),c.rep])).values()].sort((a,b)=>a.localeCompare(b,'tr'));repFilter.innerHTML='<option value="">Tüm Satış Temsilcileri</option>'+reps.map(r=>`<option value="${esc(norm(r))}">${esc(r)}</option>`).join('');if(reps.some(r=>norm(r)===current))repFilter.value=current;}
+function populateRepFilter(){const current=repFilter.value;const reps=[...new Map(state.customers.map(c=>[norm(c.rep),c.rep])).values()].sort((a,b)=>a.localeCompare(b,'tr'));repFilter.innerHTML='<option value="">Tüm Satış Temsilcileri</option>'+reps.map(r=>`<option value="${esc(norm(r))}">${esc(r)}</option>`).join('');if(reps.some(r=>norm(r)===current))repFilter.value=current;hideCustomerLookupResults();}
+function hideCustomerLookupResults(){customerLookupRows=[];customerLookupResults.classList.remove('show');customerLookupResults.innerHTML='';customerLookupResults.style.top='';customerLookupResults.style.maxHeight=''}
+function positionCustomerLookupResults(){if(window.innerWidth<=480&&customerLookupResults.classList.contains('show')){const r=customerLookup.getBoundingClientRect(),top=Math.max(8,Math.min(window.innerHeight-130,r.bottom+6));customerLookupResults.style.top=top+'px';customerLookupResults.style.maxHeight=Math.max(120,window.innerHeight-top-12)+'px'}else{customerLookupResults.style.top='';customerLookupResults.style.maxHeight=''}}
+function findCustomerLookupRows(query){
+  const nq=norm(query);if(!nq)return[];const seen=new Set(),rows=[];
+  for(const c of state.customers){const nn=norm(c.name);if(!nn.includes(nq))continue;const key=[nn,norm(c.rep),c.city,trUpper(c.district),c.code].join('|');if(seen.has(key))continue;seen.add(key);let rank=2;if(nn===nq)rank=0;else if(nn.startsWith(nq))rank=1;rows.push({c,rank})}
+  rows.sort((a,b)=>a.rank-b.rank||a.c.name.localeCompare(b.c.name,'tr')||a.c.city.localeCompare(b.c.city,'tr')||a.c.district.localeCompare(b.c.district,'tr'));return rows.slice(0,10).map(x=>x.c)
+}
+function renderCustomerLookupResults(){
+  const q=customerLookup.value.trim();if(!q){hideCustomerLookupResults();return}customerLookupRows=findCustomerLookupRows(q);
+  if(!customerLookupRows.length){customerLookupResults.innerHTML='<div class="customer-lookup-empty">Eşleşen müşteri bulunamadı.</div>';customerLookupResults.classList.add('show');positionCustomerLookupResults();return}
+  customerLookupResults.innerHTML=customerLookupRows.map((c,i)=>`<button type="button" class="customer-lookup-item" data-lookup-index="${i}" role="option"><b>${esc(c.name)}</b><small>ST: ${esc(c.rep)} • ${esc(c.city)}${c.district?' / '+esc(c.district):''}</small></button>`).join('');customerLookupResults.classList.add('show');positionCustomerLookupResults()
+}
+function goToCustomerOwner(c){
+  if(!c)return;customerLookup.value=c.name;hideCustomerLookupResults();repFilter.value=norm(c.rep);renderMap(false);
+  const wantedCity=trUpper(c.city);const marker=state.markers.find(m=>norm(m._group.rep)===norm(c.rep)&&m._group.city===wantedCity)||state.markers.find(m=>norm(m._group.rep)===norm(c.rep));
+  if(!marker){focusVisible(repFilter.value);status(`${c.name} • ${c.rep}`,'ok',3200);return}
+  const target=marker._baseCoord||marker.getLatLng();const targetZoom=Math.min(map.getMaxZoom(),Math.max(map.getZoom(),wantedCity==='İSTANBUL'?10:8));const center=map.getCenter();const alreadyThere=center.distanceTo(target)<20&&map.getZoom()===targetZoom;
+  const openTarget=()=>{refreshIcons();requestAnimationFrame(()=>marker.openPopup())};if(alreadyThere)openTarget();else{map.once('moveend',openTarget);map.setView(target,targetZoom,{animate:true})}
+  status(`${c.name} → ${c.rep}`,'ok',3200)
+}
 function markerIcon(rep,city,zoom){const color=colorFor(rep);if(zoom>=7)return L.divIcon({className:'',html:`<div class="pin-name" style="background:${color}">${esc(rep)}<span class="pin-city">${esc(city)}</span></div>`,iconSize:[0,0],iconAnchor:[0,0]});return L.divIcon({className:'',html:`<div class="pin" style="background:${color}"><span>${esc(initials(rep))}</span></div>`,iconSize:[34,34],iconAnchor:[17,34],popupAnchor:[0,-34]})}
 function photoHtml(rep){const p=state.photoMap.get(norm(rep));return p?`<img class="portrait" src="${p}" alt="${esc(rep)}">`:`<div class="avatar-fallback">${esc(initials(rep))}</div>`}
 function popupHtml(g,id){const phone=state.phoneMap.get(norm(g.rep))||'';const districts=g.districts.length?g.districts.map(d=>`<span class="district-chip">${esc(d)}</span>`).join(''):'<span class="muted">İlçe bilgisi yok</span>';const anchor=(g.city==='İSTANBUL'&&g._anchorDistrict)?`<div class="row"><div class="lbl">Harita Pin Konumu</div><div class="val">${esc(g._anchorDistrict)} <span class="muted">(hizmet yoğunluğuna göre)</span></div></div>`:'';return `<div class="pop"><div class="pophead"><div class="portrait-wrap">${photoHtml(g.rep)}</div><div class="pop-title"><b>${esc(g.rep)}</b><span class="tag">${esc(g.city)} • ${g.customers.length} müşteri</span></div></div><div class="popbody"><div class="row"><div class="lbl">Cep Telefonu</div><div class="val">${phone?`<a class="phone" href="tel:${telHref(phone)}">${esc(phone)}</a>`:'<span class="muted">Telefon bilgisi yok</span>'}</div></div><div class="row"><div class="lbl">Hizmet Verilen Şehir</div><div class="val cityval">${esc(g.city)}</div></div>${anchor}<div class="row"><div class="lbl">Hizmet Verilen İlçeler (${g.districts.length})</div><div class="districts">${districts}</div></div><div class="buttons">${phone?`<a class="btn btn-secondary" href="tel:${telHref(phone)}">Ara</a>`:''}<button class="btn btn-primary" onclick="event.stopPropagation();openCustomers(${id})">Müşterileri Gör (${g.customers.length})</button></div></div></div>`}
@@ -297,7 +324,12 @@ async function performExcelLoad(mode='initial'){
   if(ok){await finishLoading(4000);if(initial&&!excelWatchTimer)excelWatchTimer=setInterval(checkExcelUpdate,10000);return true}
   await waitLoadingMinimum(4000);showLoadingError(lastLoadError||'MAPLIST.xlsx yüklenemedi. Lütfen tekrar deneyin.',!initial);return false;
 }
-repFilter.addEventListener('change',()=>renderMap(true));
+repFilter.addEventListener('change',()=>{customerLookup.value='';hideCustomerLookupResults();renderMap(true)});
+customerLookup.addEventListener('input',renderCustomerLookupResults);
+customerLookup.addEventListener('focus',()=>{if(customerLookup.value.trim())renderCustomerLookupResults()});
+customerLookup.addEventListener('keydown',e=>{if(e.key==='Escape'){hideCustomerLookupResults();customerLookup.blur()}else if(e.key==='Enter'&&customerLookupRows.length){e.preventDefault();goToCustomerOwner(customerLookupRows[0])}});
+customerLookupResults.addEventListener('click',e=>{const btn=e.target.closest('[data-lookup-index]');if(!btn)return;const i=Number(btn.dataset.lookupIndex);if(Number.isInteger(i)&&customerLookupRows[i])goToCustomerOwner(customerLookupRows[i])});
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('.customer-lookup'))hideCustomerLookupResults()});
 refreshBtn.addEventListener('click',async()=>{if(excelLoading)return;await performExcelLoad('refresh')});
 retryLoadBtn.addEventListener('click',async()=>{if(excelLoading)return;await performExcelLoad(lastLoadingMode)});
 returnMapBtn.addEventListener('click',()=>{loadingScreen.classList.add('hide');loadingScreen.classList.remove('error','run');refreshBtn.disabled=false;setTimeout(()=>map.invalidateSize({pan:false}),250)});
@@ -307,7 +339,7 @@ document.getElementById('closeModal').addEventListener('click',()=>{document.get
 document.getElementById('customerModal').addEventListener('click',e=>{if(e.target.id==='customerModal')document.getElementById('closeModal').click()});
 document.getElementById('customerSearch').addEventListener('input',e=>renderCustomers(e.target.value));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('closeModal').click()});
-window.addEventListener('resize',()=>requestAnimationFrame(()=>map.invalidateSize({pan:false})));
+window.addEventListener('resize',()=>requestAnimationFrame(()=>{map.invalidateSize({pan:false});positionCustomerLookupResults()}));
 window.addEventListener('orientationchange',()=>setTimeout(()=>map.invalidateSize({pan:false}),260));
 performExcelLoad('initial');
 </script>
