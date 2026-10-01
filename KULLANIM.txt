@@ -1,15 +1,17 @@
-KUZEY PET - TURKIYE ST BOLGE HARITASI V3
+KUZEY PET TURKIYE ST BOLGE HARITASI - V3 REV4
 
-DINAMIK EXCEL KULLANIMI
-1) Excel dosyasinin adi her zaman: MAPLIST.xlsx
-2) Dosya konumu her zaman: data/MAPLIST.xlsx
-3) Mac: HARITAYI_AC.command dosyasini acin.
-   Windows: HARITAYI_AC.bat dosyasini acin.
-4) Harita acikken data/MAPLIST.xlsx dosyasini degistirirseniz sistem yaklasik 10 saniye icinde degisikligi algilar ve haritayi yeniler.
-5) Isterseniz ustteki "Veriyi Yenile" butonuna da basabilirsiniz.
+ONLINE KULLANIM (ONERILEN)
+- index.html, assets/ ve data/ klasorlerini birlikte yayinlayin.
+- Veri kaynagi: data/MAPLIST.xlsx
+- Sayfa acilisinda loading ekrani EN AZ 4 saniye gorunur ve Excel tamamen okunup islenmeden kapanmaz.
+- Excel yuklenemezse eski/gomulu veri gosterilmez; ekranda hata mesaji ve tekrar deneme secenegi gorunur.
+- Yenile butonu, mevcut harita zoom/merkezini ve acik popup/musteri ekranini koruyarak Excel'i yeniden okur.
+- Arka plandaki Excel guncelleme kontrolu de kullanicinin harita zoom/merkezini degistirmez.
+
+MOBIL/TABLET
+- Ust bar responsive olarak iki satira yerlesir.
+- Logo, ST secimi ve Yenile butonu ekran genisligine gore boyutlanir.
+- Harita/popup/musteri listesi mobil ve tablette kullanilabilir kalir.
 
 ONEMLI
-- index.html dosyasini tek basina cift tiklayip file:// ile acarsaniz tarayici guvenligi nedeniyle data/MAPLIST.xlsx otomatik okunamaz.
-- Bu nedenle dinamik kullanimda mutlaka HARITAYI_AC.command / HARITAYI_AC.bat ile acin.
-- MAPLIST.xlsx icinde yeni ST eklendiginde, Musteri_Listesi sekmesinde o ST'ye ait en az bir sehirli musteri kaydi varsa ST filtre listesine ve haritaya otomatik eklenir.
-- Telefon ve fotograf icin Telefon_Numarasi sekmesindeki ST adinin Musteri_Listesi ile eslesmesi gerekir. Adlarda bosluk/noktalama farklari toleranslidir.
+- Deploy etmeden once data/MAPLIST.xlsx dosyasini kendi EN GUNCEL Excel dosyanizla degistirin.

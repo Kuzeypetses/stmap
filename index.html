@@ -32,6 +32,57 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
 @keyframes loadingProgress{from{width:0}to{width:100%}}@keyframes loadingFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.015)}}@keyframes loadingDot{0%,80%,100%{opacity:.28;transform:scale(.85)}40%{opacity:1;transform:scale(1.15)}}
 @media(max-width:800px){.copyright{right:8px;bottom:7px;font-size:9px;padding:5px 8px}.loading-logo{width:min(270px,72vw)}}
 
+
+/* REV4 davranis/ responsive duzeltmeleri - masaustu gorunumu korunur */
+.loading-screen.error .loading-progress,.loading-screen.error .loading-dots{display:none}
+.loading-error-actions{display:none;justify-content:center;gap:9px;margin-top:18px;flex-wrap:wrap}
+.loading-screen.error .loading-error-actions{display:flex}
+.loading-error-btn{border:1px solid rgba(255,255,255,.26);border-radius:10px;padding:10px 14px;font-weight:850;cursor:pointer;background:#fff;color:var(--navy);box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.loading-error-btn.secondary{background:rgba(255,255,255,.10);color:#fff}
+.refresh:disabled{opacity:.65;cursor:default;transform:none}
+
+@media(max-width:900px){
+  header{min-height:0;padding:8px 10px 9px;flex-direction:column;align-items:stretch;gap:7px}
+  .brand{width:100%;gap:10px;min-width:0}
+  .logo{width:58px;height:58px;flex:0 0 58px}
+  .separator{display:block;width:1px;height:38px;flex:0 0 1px}
+  h1{font-size:clamp(14px,3.9vw,18px);line-height:1.12;white-space:normal;overflow:visible;text-overflow:clip}
+  .sub{display:none}
+  .header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;flex-wrap:nowrap;justify-content:stretch}
+  .header-actions .stat{display:none}
+  .filter-box{width:100%;max-width:none;min-width:0;padding:4px 5px}
+  .filter-box span{display:none}
+  .filter-box select{width:100%;min-width:0;max-width:none;padding:8px 28px 8px 9px}
+  .refresh{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 12px;white-space:nowrap}
+  .leaflet-popup-content{width:min(330px,calc(100vw - 36px))!important;max-width:calc(100vw - 36px)}
+  .info{left:8px;right:8px;bottom:36px;max-width:none;padding:7px 9px;font-size:10px;line-height:1.35;max-height:64px;overflow:auto}
+  .copyright{right:8px;bottom:7px;font-size:9px;padding:5px 8px}
+  .modal{padding:8px}
+  .modal-card{width:100%;height:min(94vh,760px);border-radius:14px}
+  .modal-head{padding:12px 13px;gap:9px}
+  .modal-title h2{font-size:16px}
+  .search-wrap{padding:9px 10px;flex-direction:column;align-items:stretch;gap:7px}
+  .result-count{text-align:right}
+  .customers{min-width:720px}
+}
+@media(max-width:480px){
+  header{padding:6px 8px 8px;gap:6px}
+  .brand{gap:8px}
+  .logo{width:50px;height:50px;flex-basis:50px}
+  .separator{height:32px}
+  h1{font-size:14px;letter-spacing:.15px}
+  .filter-box select{font-size:11px;padding-top:7px;padding-bottom:7px}
+  .refresh{font-size:11px;min-height:34px;padding:7px 10px}
+  .pophead{padding:11px;gap:10px}
+  .portrait-wrap{width:62px;height:62px;flex-basis:62px;border-radius:12px}
+  .pophead b{font-size:15px}
+  .popbody{padding:11px 12px 13px}
+  .buttons{gap:6px}.btn{padding:8px 9px;font-size:11px}
+  .info{font-size:9px;max-height:54px;bottom:34px}
+  .loading-inner{width:92vw;padding:18px}
+  .loading-logo{width:min(270px,74vw)}
+}
+
 </style>
 </head>
 <body>
@@ -41,6 +92,10 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
     <div id="loadingText" class="loading-text">MAPLIST.xlsx yükleniyor...</div>
     <div class="loading-progress"><span></span></div>
     <div class="loading-dots"><i></i><i></i><i></i></div>
+    <div class="loading-error-actions" id="loadingErrorActions">
+      <button type="button" class="loading-error-btn" id="retryLoadBtn">Tekrar Dene</button>
+      <button type="button" class="loading-error-btn secondary" id="returnMapBtn">Haritaya Dön</button>
+    </div>
   </div>
 </div>
 <div class="copyright">Tüm hakları Kuzey Pet'e aittir.</div>
@@ -89,14 +144,28 @@ const ISTANBUL_DISTRICTS={
 'ADALAR':[40.8744,29.1294],'ARNAVUTKÖY':[41.1858,28.7405],'ATAŞEHİR':[40.9830,29.1279],'AVCILAR':[40.9794,28.7214],'BAHÇELİEVLER':[40.9971,28.8506],'BAKIRKÖY':[40.9804,28.8720],'BAYRAMPAŞA':[41.0430,28.9121],'BAĞCILAR':[41.0390,28.8567],'BAŞAKŞEHİR':[41.0930,28.8020],'BEYKOZ':[41.1271,29.0973],'BEYLİKDÜZÜ':[41.0014,28.6416],'BEYOĞLU':[41.0369,28.9773],'BEŞİKTAŞ':[41.0430,29.0094],'BÜYÜKÇEKMECE':[41.0200,28.5850],'ESENLER':[41.0431,28.8761],'ESENYURT':[41.0343,28.6801],'EYÜP':[41.0472,28.9339],'FATİH':[41.0186,28.9398],'GAZİOSMANPAŞA':[41.0750,28.9124],'GÜNGÖREN':[41.0220,28.8726],'KADIKÖY':[40.9917,29.0277],'KARTAL':[40.8879,29.1856],'KAĞITHANE':[41.0810,28.9710],'KÜÇÜKÇEKMECE':[41.0002,28.7809],'MALTEPE':[40.9357,29.1551],'PENDİK':[40.8775,29.2333],'SANCAKTEPE':[41.0024,29.2319],'SARIYER':[41.1667,29.0500],'SULTANBEYLİ':[40.9604,29.2707],'SULTANGAZİ':[41.1065,28.8683],'SİLİVRİ':[41.0736,28.2464],'TUZLA':[40.8167,29.3008],'ZEYTİNBURNU':[40.9906,28.8961],'ÇATALCA':[41.1426,28.4618],'ÇEKMEKÖY':[41.0358,29.1783],'ÜMRANİYE':[41.0338,29.1013],'ÜSKÜDAR':[41.0269,29.0158],'ŞİLE':[41.1754,29.6133],'ŞİŞLİ':[41.0602,28.9877]
 };
 const ISTANBUL_LANDWARD={'KADIKÖY':[0.001,0.007],'MALTEPE':[0.002,0.007],'FATİH':[0.003,-0.006],'ÜSKÜDAR':[0.001,0.006],'BAKIRKÖY':[0.005,0.001],'BEŞİKTAŞ':[0.002,-0.004],'BEYOĞLU':[0.003,-0.003],'SARIYER':[0.004,-0.003],'PENDİK':[0.003,0.006],'KARTAL':[0.003,0.006],'TUZLA':[0.004,0.005]};
-let state={customers:[],phoneMap:new Map(),photoMap:new Map(),groups:[],markers:[],currentCustomers:[]};
+let state={customers:[],phoneMap:new Map(),photoMap:new Map(),groups:[],markers:[],currentCustomers:[],currentGroupKey:''};
 const map=L.map('map',{zoomControl:true,minZoom:5,maxZoom:12}).setView([39.0,35.2],6);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
 const markerLayer=L.layerGroup().addTo(map);
 const statusbar=document.getElementById('statusbar');
 const repFilter=document.getElementById('repFilter');
 function status(msg,type='ok',ms=2200){statusbar.textContent=msg;statusbar.className='statusbar show'+(type==='error'?' error':'');if(ms)setTimeout(()=>statusbar.className='statusbar',ms)}
-const loadingScreen=document.getElementById('loadingScreen');const loadingText=document.getElementById('loadingText');let loadingStartedAt=0;function startLoading(text='MAPLIST.xlsx yükleniyor...'){loadingText.textContent=text;loadingStartedAt=Date.now();loadingScreen.classList.remove('hide','run');void loadingScreen.offsetWidth;loadingScreen.classList.add('run');loadingScreen.setAttribute('aria-busy','true')}async function finishLoading(minMs=4000){const wait=Math.max(0,minMs-(Date.now()-loadingStartedAt));if(wait)await new Promise(r=>setTimeout(r,wait));loadingScreen.classList.add('hide');loadingScreen.classList.remove('run');loadingScreen.setAttribute('aria-busy','false')}
+const loadingScreen=document.getElementById('loadingScreen');
+const loadingText=document.getElementById('loadingText');
+const refreshBtn=document.getElementById('refreshBtn');
+const retryLoadBtn=document.getElementById('retryLoadBtn');
+const returnMapBtn=document.getElementById('returnMapBtn');
+let loadingStartedAt=0,lastLoadingMode='initial',lastLoadError='',excelWatchTimer=null;
+function startLoading(text='MAPLIST.xlsx yükleniyor...'){
+  loadingText.textContent=text;loadingStartedAt=Date.now();
+  loadingScreen.classList.remove('hide','run','error');void loadingScreen.offsetWidth;loadingScreen.classList.add('run');
+  loadingScreen.setAttribute('aria-busy','true');returnMapBtn.style.display='none';refreshBtn.disabled=true;
+}
+async function waitLoadingMinimum(minMs=4000){const wait=Math.max(0,minMs-(Date.now()-loadingStartedAt));if(wait)await new Promise(r=>setTimeout(r,wait));}
+async function finishLoading(minMs=4000){await waitLoadingMinimum(minMs);loadingScreen.classList.add('hide');loadingScreen.classList.remove('run','error');loadingScreen.setAttribute('aria-busy','false');refreshBtn.disabled=false;setTimeout(()=>map.invalidateSize({pan:false}),480);}
+function showLoadingError(message,allowReturn=false){loadingText.textContent=message;loadingScreen.classList.add('error');loadingScreen.classList.remove('run','hide');loadingScreen.setAttribute('aria-busy','false');returnMapBtn.style.display=allowReturn?'inline-flex':'none';refreshBtn.disabled=false;}
+
 function col(row,...names){for(const n of names){if(Object.prototype.hasOwnProperty.call(row,n))return row[n]}return ''}
 function cleanRows(ws){return XLSX.utils.sheet_to_json(ws,{defval:'',raw:false}).filter(r=>Object.values(r).some(v=>String(v).trim()!==''));}
 function sheetByNames(wb,names){for(const n of names){if(wb.Sheets[n])return wb.Sheets[n]}const found=wb.SheetNames.find(x=>names.map(norm).includes(norm(x)));return found?wb.Sheets[found]:null;}
@@ -170,15 +239,75 @@ function separateMaxZoomBanners(){
   }
 }
 function refreshIcons(){const z=map.getZoom();for(const m of state.markers)m.setIcon(markerIcon(m._group.rep,m._group.city,z));requestAnimationFrame(separateMaxZoomBanners)}
-window.openCustomers=function(id){const g=state.groups.find(x=>x._id===id);if(!g)return;state.currentCustomers=g.customers;document.getElementById('modalTitle').textContent=g.rep;document.getElementById('modalSub').textContent=`${g.city} • ${g.customers.length.toLocaleString('tr-TR')} müşteri • ${g.districts.length} ilçe`;document.getElementById('customerSearch').value='';renderCustomers('');document.getElementById('customerModal').classList.add('show');document.getElementById('customerModal').setAttribute('aria-hidden','false');setTimeout(()=>document.getElementById('customerSearch').focus(),50)}
+window.openCustomers=function(id){const g=state.groups.find(x=>x._id===id);if(!g)return;state.currentGroupKey=groupKey(g);state.currentCustomers=g.customers;document.getElementById('modalTitle').textContent=g.rep;document.getElementById('modalSub').textContent=`${g.city} • ${g.customers.length.toLocaleString('tr-TR')} müşteri • ${g.districts.length} ilçe`;document.getElementById('customerSearch').value='';renderCustomers('');document.getElementById('customerModal').classList.add('show');document.getElementById('customerModal').setAttribute('aria-hidden','false');setTimeout(()=>document.getElementById('customerSearch').focus(),50)}
 function renderCustomers(q){const nq=norm(q);const rows=state.currentCustomers.filter(c=>!nq||norm([c.name,c.group,c.extra,c.city,c.district].join(' ')).includes(nq));document.getElementById('resultCount').textContent=`${rows.length.toLocaleString('tr-TR')} kayıt`;document.getElementById('customerRows').innerHTML=rows.length?rows.map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.group)||'<span class="muted">—</span>'}</td><td>${esc(c.extra)||'<span class="muted">—</span>'}</td><td>${esc(c.city)}</td><td>${esc(c.district)||'<span class="muted">—</span>'}</td></tr>`).join(''):'<tr><td class="empty" colspan="5">Aramanızla eşleşen müşteri bulunamadı.</td></tr>'}
-async function loadArrayBuffer(ab,label='MAPLIST.xlsx'){const wb=XLSX.read(ab,{type:'array',cellDates:true});const customerWs=sheetByNames(wb,['Müsteri_Listesi','Müşteri_Listesi']);const phoneWs=sheetByNames(wb,['Telefon_Numarasi','Telefon_Numarası']);if(!customerWs)throw new Error('Müsteri_Listesi sekmesi bulunamadı.');if(!phoneWs)throw new Error('Telefon_Numarasi sekmesi bulunamadı.');const customerRows=cleanRows(customerWs);const phoneRows=cleanRows(phoneWs);const photos=await extractPhonePhotos(ab,phoneRows);buildData(customerRows,phoneRows,photos);renderMap(true);return{customerRows,phoneRows};}
+
+function groupKey(g){return g?norm(g.rep)+'|'+trUpper(g.city):''}
+function captureUiState(){
+  const popupSource=map._popup&&map._popup._source;const popupGroup=popupSource&&popupSource._group;
+  const modal=document.getElementById('customerModal');const tableWrap=document.querySelector('.table-wrap');
+  return{center:map.getCenter(),zoom:map.getZoom(),popupKey:popupGroup?groupKey(popupGroup):'',modalOpen:modal.classList.contains('show'),modalKey:state.currentGroupKey||'',search:document.getElementById('customerSearch').value||'',tableScroll:tableWrap?tableWrap.scrollTop:0};
+}
+function restoreModalState(ui){
+  if(!ui||!ui.modalOpen||!ui.modalKey)return;const g=state.groups.find(x=>groupKey(x)===ui.modalKey);if(!g)return;
+  state.currentGroupKey=groupKey(g);state.currentCustomers=g.customers;
+  document.getElementById('modalTitle').textContent=g.rep;document.getElementById('modalSub').textContent=`${g.city} • ${g.customers.length.toLocaleString('tr-TR')} müşteri • ${g.districts.length} ilçe`;
+  document.getElementById('customerSearch').value=ui.search||'';renderCustomers(ui.search||'');
+  document.getElementById('customerModal').classList.add('show');document.getElementById('customerModal').setAttribute('aria-hidden','false');
+  const tableWrap=document.querySelector('.table-wrap');if(tableWrap)requestAnimationFrame(()=>tableWrap.scrollTop=ui.tableScroll||0);
+}
+function restoreUiState(ui){
+  if(!ui)return;map.setView(ui.center,ui.zoom,{animate:false});refreshIcons();
+  if(ui.popupKey){const m=state.markers.find(x=>groupKey(x._group)===ui.popupKey);if(m){m.openPopup();map.setView(ui.center,ui.zoom,{animate:false});}}
+  restoreModalState(ui);
+}
+
+async function loadArrayBuffer(ab,label='MAPLIST.xlsx',opts={}){
+  const wb=XLSX.read(ab,{type:'array',cellDates:true});const customerWs=sheetByNames(wb,['Müsteri_Listesi','Müşteri_Listesi']);const phoneWs=sheetByNames(wb,['Telefon_Numarasi','Telefon_Numarası']);
+  if(!customerWs)throw new Error('Müsteri_Listesi sekmesi bulunamadı.');if(!phoneWs)throw new Error('Telefon_Numarasi sekmesi bulunamadı.');
+  const customerRows=cleanRows(customerWs);const phoneRows=cleanRows(phoneWs);const photos=await extractPhonePhotos(ab,phoneRows);
+  const preserveUi=opts.preserveUi!==false,ui=preserveUi?captureUiState():null;
+  buildData(customerRows,phoneRows,photos);renderMap(Boolean(opts.autoFit)&&!preserveUi);if(preserveUi)restoreUiState(ui);
+  return{customerRows,phoneRows};
+}
 let excelVersion='';let excelLoading=false;
-function responseVersion(res){return res.headers.get('x-file-version')||[(res.headers.get('last-modified')||''),(res.headers.get('content-length')||'')].join('|')}
-async function loadLatestExcel(silent=false){if(location.protocol==='file:'){console.warn('MAPLIST.xlsx file:// üzerinden okunamaz; gömülü veri kullanılıyor.');return false}if(excelLoading)return false;if(typeof XLSX==='undefined'||typeof JSZip==='undefined'){if(!silent)status('Excel kütüphanesi yüklenemedi; gömülü yedek veri kullanılıyor.','error',3500);return false}excelLoading=true;try{const res=await fetch(DATA_FILE+'?v='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error('Excel okunamadı: HTTP '+res.status);const ver=responseVersion(res);await loadArrayBuffer(await res.arrayBuffer(),'MAPLIST.xlsx');excelVersion=ver||excelVersion;return true}catch(e){console.warn(e);if(!silent)status('MAPLIST.xlsx okunamadı; gömülü yedek veri kullanılıyor.','error',4000);return false}finally{excelLoading=false}}
-async function checkExcelUpdate(){if(location.protocol==='file:'||excelLoading)return;try{const res=await fetch(DATA_FILE+'?check='+Date.now(),{method:'HEAD',cache:'no-store'});if(!res.ok)return;const ver=responseVersion(res);if(!ver)return;if(excelVersion&&ver!==excelVersion){await loadLatestExcel(true)}else if(!excelVersion){excelVersion=ver}}catch(e){console.warn('Excel sürüm kontrolü başarısız:',e)}}
-repFilter.addEventListener('change',()=>renderMap(true));document.getElementById('refreshBtn').addEventListener('click',async()=>{if(excelLoading)return;startLoading('MAPLIST.xlsx yenileniyor...');try{await loadLatestExcel(false)}finally{await finishLoading(4000)}});document.getElementById('closeModal').addEventListener('click',()=>{document.getElementById('customerModal').classList.remove('show');document.getElementById('customerModal').setAttribute('aria-hidden','true')});document.getElementById('customerModal').addEventListener('click',e=>{if(e.target.id==='customerModal')document.getElementById('closeModal').click()});document.getElementById('customerSearch').addEventListener('input',e=>renderCustomers(e.target.value));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('closeModal').click()});
-buildEmbedded();startLoading('MAPLIST.xlsx yükleniyor...');(async()=>{try{if(location.protocol!=='file:'){await loadLatestExcel(true);setInterval(checkExcelUpdate,10000)}}finally{await finishLoading(4000)}})();
+function responseVersion(res){return res.headers.get('etag')||res.headers.get('x-file-version')||[(res.headers.get('last-modified')||''),(res.headers.get('content-length')||'')].join('|')}
+async function loadLatestExcel(opts={}){
+  const silent=Boolean(opts.silent),preserveUi=opts.preserveUi!==false,autoFit=Boolean(opts.autoFit);lastLoadError='';
+  if(location.protocol==='file:'){lastLoadError='MAPLIST.xlsx doğrudan file:// üzerinden okunamaz. Siteyi Cloudflare veya yerel sunucu üzerinden açın.';if(!silent)status(lastLoadError,'error',5000);return false}
+  if(excelLoading)return false;
+  if(typeof XLSX==='undefined'||typeof JSZip==='undefined'){lastLoadError='Excel kütüphanesi yüklenemedi. Lütfen internet bağlantısını kontrol edip tekrar deneyin.';if(!silent)status(lastLoadError,'error',5000);return false}
+  excelLoading=true;
+  try{
+    const res=await fetch(DATA_FILE+'?v='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error('MAPLIST.xlsx okunamadı: HTTP '+res.status);
+    const ver=responseVersion(res);const ab=await res.arrayBuffer();await loadArrayBuffer(ab,'MAPLIST.xlsx',{preserveUi,autoFit});excelVersion=ver||excelVersion;return true;
+  }catch(e){console.warn(e);lastLoadError=e&&e.message?e.message:'MAPLIST.xlsx yüklenemedi.';if(!silent)status(lastLoadError,'error',5000);return false}
+  finally{excelLoading=false}
+}
+async function checkExcelUpdate(){
+  if(location.protocol==='file:'||excelLoading)return;
+  try{
+    const res=await fetch(DATA_FILE+'?check='+Date.now(),{method:'HEAD',cache:'no-store'});if(!res.ok)return;const ver=responseVersion(res);if(!ver)return;
+    if(excelVersion&&ver!==excelVersion){const ok=await loadLatestExcel({silent:true,preserveUi:true,autoFit:false});if(!ok)status('MAPLIST.xlsx güncellenemedi: '+(lastLoadError||'bilinmeyen hata'),'error',4500)}else if(!excelVersion){excelVersion=ver}
+  }catch(e){console.warn('Excel sürüm kontrolü başarısız:',e)}
+}
+async function performExcelLoad(mode='initial'){
+  lastLoadingMode=mode;const initial=mode==='initial';startLoading(initial?'MAPLIST.xlsx yükleniyor...':'MAPLIST.xlsx yenileniyor...');
+  const ok=await loadLatestExcel({silent:true,preserveUi:!initial,autoFit:initial});
+  if(ok){await finishLoading(4000);if(initial&&!excelWatchTimer)excelWatchTimer=setInterval(checkExcelUpdate,10000);return true}
+  await waitLoadingMinimum(4000);showLoadingError(lastLoadError||'MAPLIST.xlsx yüklenemedi. Lütfen tekrar deneyin.',!initial);return false;
+}
+repFilter.addEventListener('change',()=>renderMap(true));
+refreshBtn.addEventListener('click',async()=>{if(excelLoading)return;await performExcelLoad('refresh')});
+retryLoadBtn.addEventListener('click',async()=>{if(excelLoading)return;await performExcelLoad(lastLoadingMode)});
+returnMapBtn.addEventListener('click',()=>{loadingScreen.classList.add('hide');loadingScreen.classList.remove('error','run');refreshBtn.disabled=false;setTimeout(()=>map.invalidateSize({pan:false}),250)});
+document.getElementById('closeModal').addEventListener('click',()=>{document.getElementById('customerModal').classList.remove('show');document.getElementById('customerModal').setAttribute('aria-hidden','true')});
+document.getElementById('customerModal').addEventListener('click',e=>{if(e.target.id==='customerModal')document.getElementById('closeModal').click()});
+document.getElementById('customerSearch').addEventListener('input',e=>renderCustomers(e.target.value));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('closeModal').click()});
+window.addEventListener('resize',()=>requestAnimationFrame(()=>map.invalidateSize({pan:false})));
+window.addEventListener('orientationchange',()=>setTimeout(()=>map.invalidateSize({pan:false}),260));
+performExcelLoad('initial');
 </script>
 </body>
 </html>
