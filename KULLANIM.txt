@@ -15,3 +15,5 @@ MOBIL/TABLET
 
 ONEMLI
 - Deploy etmeden once data/MAPLIST.xlsx dosyasini kendi EN GUNCEL Excel dosyanizla degistirin.
+
+REV5: Popup ve müşteri listesi açılırken harita kamera/zoom hareketi engellendi; tasarım değişmedi.
