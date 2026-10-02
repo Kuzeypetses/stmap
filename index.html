@@ -13,7 +13,7 @@
 body{display:flex;flex-direction:column;overflow:hidden}button,input{font:inherit}
 header{min-height:104px;padding:10px 22px;background:linear-gradient(115deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:4px solid var(--red);box-shadow:0 4px 18px rgba(8,29,58,.2);z-index:1000}
 .brand{display:flex;align-items:center;gap:16px;min-width:0}.logo{width:96px;height:96px;display:grid;place-items:center;flex:0 0 96px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.3))}.logo img{width:100%;height:100%;display:block;object-fit:contain}.separator{width:1px;height:58px;background:rgba(255,255,255,.3)}
-h1{margin:0;font-size:clamp(16px,2vw,24px);font-weight:900;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sub{font-size:12px;opacity:.75;margin-top:3px}
+h1{margin:0;font-size:clamp(13px,1.35vw,18px);font-weight:900;letter-spacing:.25px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sub{font-size:11px;opacity:.75;margin-top:3px}
 .header-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}.stat{display:flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.08);font-size:12px;white-space:nowrap}.stat b{font-size:13px}.refresh{border:0;border-radius:9px;background:var(--red);color:#fff;font-weight:850;padding:9px 12px;cursor:pointer;box-shadow:0 4px 12px rgba(215,25,32,.3)}.refresh:active{transform:translateY(1px)}
 main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;background:#dce3ea}.info{position:absolute;left:16px;bottom:16px;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);padding:10px 12px;border-radius:12px;box-shadow:0 8px 28px rgba(15,23,42,.16);font-size:12px;color:#475569;border-left:4px solid var(--red);max-width:min(560px,calc(100vw - 32px))}
 .statusbar{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:900;background:rgba(8,29,58,.92);color:#fff;padding:9px 13px;border-radius:999px;font-size:12px;font-weight:800;box-shadow:0 6px 20px rgba(8,29,58,.22);display:none}.statusbar.show{display:block}.statusbar.error{background:#a11218}
@@ -47,9 +47,9 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   .brand{width:100%;gap:10px;min-width:0}
   .logo{width:58px;height:58px;flex:0 0 58px}
   .separator{display:block;width:1px;height:38px;flex:0 0 1px}
-  h1{font-size:clamp(14px,3.9vw,18px);line-height:1.12;white-space:normal;overflow:visible;text-overflow:clip}
+  h1{font-size:clamp(12px,3vw,16px);line-height:1.12;white-space:normal;overflow:visible;text-overflow:clip}
   .sub{display:none}
-  .header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;align-items:center;gap:7px;flex-wrap:nowrap;justify-content:stretch}
+  .header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto;align-items:center;gap:7px;flex-wrap:nowrap;justify-content:stretch}
   .header-actions .stat{display:none}
   .filter-box,.customer-lookup{width:100%;max-width:none;min-width:0;padding:4px 5px}
   .filter-box span,.customer-lookup span{display:none}
@@ -72,7 +72,7 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   .brand{gap:8px}
   .logo{width:50px;height:50px;flex-basis:50px}
   .separator{height:32px}
-  h1{font-size:14px;letter-spacing:.15px}
+  h1{font-size:13px;letter-spacing:.1px}
   .filter-box select,.customer-lookup input{font-size:11px;padding-top:7px;padding-bottom:7px}
   .customer-lookup-results{position:fixed;left:8px;right:8px;width:auto;max-height:42vh}
   .refresh{font-size:11px;min-height:34px;padding:7px 10px}
@@ -84,6 +84,10 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   .info{font-size:9px;max-height:54px;bottom:34px}
   .loading-inner{width:92vw;padding:18px}
   .loading-logo{width:min(270px,74vw)}
+}
+@media(max-width:620px){
+  .header-actions{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .refresh{width:100%}
 }
 
 </style>
@@ -107,6 +111,7 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
   <div class="header-actions">
     <label class="filter-box"><span>Satış Temsilcisi</span><select id="repFilter"><option value="">Tüm Satış Temsilcileri</option></select></label>
     <div class="filter-box customer-lookup"><span>Müşteri Ara</span><input id="customerLookup" type="search" placeholder="Müşteri Ara" autocomplete="off" spellcheck="false"><div id="customerLookupResults" class="customer-lookup-results" role="listbox" aria-label="Müşteri arama sonuçları"></div></div>
+    <label class="filter-box district-filter"><span>İlçe</span><select id="districtFilter"><option value="">Tüm İlçeler</option></select></label>
     <div class="stat">Temsilci <b id="repCount">—</b></div><div class="stat">Şehir <b id="cityCount">—</b></div><div class="stat">Müşteri <b id="customerCount">—</b></div>
     <button class="refresh" id="refreshBtn">Yenile</button>
   </div>
@@ -114,7 +119,6 @@ main{position:relative;flex:1;min-height:0}#map{height:100%;width:100%;backgroun
 <main>
   <div id="map"></div>
   <div id="statusbar" class="statusbar"></div>
-  <div class="info">Pinler <b>Satış Temsilcisi + Şehir</b> bazındadır. İstanbul pinleri temsilcinin hizmet yoğunluğundaki gerçek ilçe merkezlerine göre konumlandırılır. Üst menüden ST seçerek yalnızca o temsilcinin lokasyonlarını görebilirsiniz. <b>MAPLIST.xlsx değişiklikleri otomatik algılanır.</b></div>
 </main>
 
 <div class="modal" id="customerModal" aria-hidden="true">
@@ -156,6 +160,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,att
 const markerLayer=L.layerGroup().addTo(map);
 const statusbar=document.getElementById('statusbar');
 const repFilter=document.getElementById('repFilter');
+const districtFilter=document.getElementById('districtFilter');
 const customerLookup=document.getElementById('customerLookup');
 const customerLookupResults=document.getElementById('customerLookupResults');
 let customerLookupRows=[];
@@ -207,7 +212,7 @@ function buildEmbedded(){
   state.customers=EMBEDDED_CUSTOMERS.map(r=>({rep:r[0],code:r[1],name:r[2],group:r[3],extra:r[4],city:trUpper(r[5]),district:r[6]})).filter(x=>x.rep&&x.city);
   state.phoneMap=new Map(EMBEDDED_PHONES.map(r=>[norm(r[0]),r[1]]));state.photoMap=new Map(Object.entries(EMBEDDED_PHOTOS).map(([k,v])=>[norm(k),v]));state.vehicleMap=new Map();regroupState();populateRepFilter();renderMap(true);
 }
-function populateRepFilter(){const current=repFilter.value;const reps=[...new Map(state.customers.map(c=>[norm(c.rep),c.rep])).values()].sort((a,b)=>a.localeCompare(b,'tr'));repFilter.innerHTML='<option value="">Tüm Satış Temsilcileri</option>'+reps.map(r=>`<option value="${esc(norm(r))}">${esc(r)}</option>`).join('');if(reps.some(r=>norm(r)===current))repFilter.value=current;hideCustomerLookupResults();}
+function populateRepFilter(){const currentRep=repFilter.value,currentDistrict=districtFilter.value;const reps=[...new Map(state.customers.map(c=>[norm(c.rep),c.rep])).values()].sort((a,b)=>a.localeCompare(b,'tr'));repFilter.innerHTML='<option value="">Tüm Satış Temsilcileri</option>'+reps.map(r=>`<option value="${esc(norm(r))}">${esc(r)}</option>`).join('');if(reps.some(r=>norm(r)===currentRep))repFilter.value=currentRep;const districtMap=new Map();for(const c of state.customers){const d=String(c.district||'').trim();if(!d)continue;const city=trUpper(c.city),district=trUpper(d),key=city+'|'+district;if(!districtMap.has(key))districtMap.set(key,{city,district})}const districts=[...districtMap.values()].sort((a,b)=>a.district.localeCompare(b.district,'tr')||a.city.localeCompare(b.city,'tr'));districtFilter.innerHTML='<option value="">Tüm İlçeler</option>'+districts.map(x=>`<option value="${esc(x.city+'|'+x.district)}">${esc(x.district)} • ${esc(x.city)}</option>`).join('');if(districtMap.has(currentDistrict))districtFilter.value=currentDistrict;hideCustomerLookupResults();}
 function hideCustomerLookupResults(){customerLookupRows=[];customerLookupResults.classList.remove('show');customerLookupResults.innerHTML='';customerLookupResults.style.top='';customerLookupResults.style.maxHeight=''}
 function positionCustomerLookupResults(){if(window.innerWidth<=480&&customerLookupResults.classList.contains('show')){const r=customerLookup.getBoundingClientRect(),top=Math.max(8,Math.min(window.innerHeight-130,r.bottom+6));customerLookupResults.style.top=top+'px';customerLookupResults.style.maxHeight=Math.max(120,window.innerHeight-top-12)+'px'}else{customerLookupResults.style.top='';customerLookupResults.style.maxHeight=''}}
 function findCustomerLookupRows(query){
@@ -221,7 +226,7 @@ function renderCustomerLookupResults(){
   customerLookupResults.innerHTML=customerLookupRows.map((c,i)=>`<button type="button" class="customer-lookup-item" data-lookup-index="${i}" role="option"><b>${esc(c.name)}</b><small>ST: ${esc(c.rep)} • ${esc(c.city)}${c.district?' / '+esc(c.district):''}</small></button>`).join('');customerLookupResults.classList.add('show');positionCustomerLookupResults()
 }
 function goToCustomerOwner(c){
-  if(!c)return;customerLookup.value=c.name;hideCustomerLookupResults();repFilter.value=norm(c.rep);renderMap(false);
+  if(!c)return;customerLookup.value=c.name;hideCustomerLookupResults();districtFilter.value='';repFilter.value=norm(c.rep);renderMap(false);
   const wantedCity=trUpper(c.city);const marker=state.markers.find(m=>norm(m._group.rep)===norm(c.rep)&&m._group.city===wantedCity)||state.markers.find(m=>norm(m._group.rep)===norm(c.rep));
   if(!marker){focusVisible(repFilter.value);status(`${c.name} • ${c.rep}`,'ok',3200);return}
   const target=marker._baseCoord||marker.getLatLng();const targetZoom=Math.min(map.getMaxZoom(),Math.max(map.getZoom(),wantedCity==='İSTANBUL'?10:8));const center=map.getCenter();const alreadyThere=center.distanceTo(target)<20&&map.getZoom()===targetZoom;
@@ -239,13 +244,13 @@ function istanbulAnchors(list){
   for(const g of sorted){const ranked=[...g.districtCounts.entries()].map(([d,n])=>[trUpper(d),n]).filter(([d])=>ISTANBUL_DISTRICTS[d]).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'tr'));let chosen=ranked.find(([d])=>!usedDistricts.has(d))||ranked[0];if(!chosen){result.set(g,coordsFor('İSTANBUL'));continue}const d=chosen[0];usedDistricts.add(d);g._anchorDistrict=d;let coord=[...ISTANBUL_DISTRICTS[d]];const n=dupeCount.get(d)||0;if(n>0){const v=ISTANBUL_LANDWARD[d]||[0.004,0.005];coord=[coord[0]+v[0]*n,coord[1]+v[1]*n]}dupeCount.set(d,n+1);result.set(g,coord)}return result;
 }
 function renderMap(autoFit=false){
-  markerLayer.clearLayers();state.markers=[];const selected=repFilter.value;const visibleGroups=selected?state.groups.filter(g=>norm(g.rep)===selected):state.groups;const cityGroups=new Map();for(const g of visibleGroups){if(!coordsFor(g.city))continue;if(!cityGroups.has(g.city))cityGroups.set(g.city,[]);cityGroups.get(g.city).push(g)}
+  markerLayer.clearLayers();state.markers=[];const selected=repFilter.value,selectedDistrict=districtFilter.value;let visibleGroups=selected?state.groups.filter(g=>norm(g.rep)===selected):state.groups;if(selectedDistrict){const sep=selectedDistrict.indexOf('|'),wantedCity=sep>=0?selectedDistrict.slice(0,sep):'',wantedDistrict=sep>=0?selectedDistrict.slice(sep+1):selectedDistrict;visibleGroups=visibleGroups.filter(g=>trUpper(g.city)===wantedCity&&g.customers.some(c=>trUpper(c.district)===wantedDistrict))}const cityGroups=new Map();for(const g of visibleGroups){if(!coordsFor(g.city))continue;if(!cityGroups.has(g.city))cityGroups.set(g.city,[]);cityGroups.get(g.city).push(g)}
   for(const [city,list] of cityGroups){const base=coordsFor(city);list.sort((a,b)=>a.rep.localeCompare(b.rep,'tr'));const istAnch=city==='İSTANBUL'?istanbulAnchors(list):null;list.forEach((g,i)=>{g._coord=city==='İSTANBUL'?istAnch.get(g):offsetCoord(base[0],base[1],i,list.length);const m=L.marker(g._coord,{icon:markerIcon(g.rep,g.city,map.getZoom())}).addTo(markerLayer).bindPopup(()=>popupHtml(g,g._id),{maxWidth:380,autoPan:false,keepInView:false});m._group=g;m._baseCoord=L.latLng(g._coord[0],g._coord[1]);state.markers.push(m)})}
   map.off('zoomend',refreshIcons);map.on('zoomend',refreshIcons);refreshIcons();const missing=[...new Set(visibleGroups.filter(g=>!coordsFor(g.city)).map(g=>g.city))];if(missing.length)console.warn('Koordinatı olmayan şehirler:',missing);
   const visibleCustomers=visibleGroups.reduce((n,g)=>n+g.customers.length,0);document.getElementById('repCount').textContent=new Set(visibleGroups.map(g=>norm(g.rep))).size;document.getElementById('cityCount').textContent=new Set(visibleGroups.map(g=>g.city)).size;document.getElementById('customerCount').textContent=visibleCustomers.toLocaleString('tr-TR');
   if(autoFit)focusVisible(selected);
 }
-function focusVisible(selected){if(!selected){map.setView([39.0,35.2],6);return}const coords=state.markers.map(m=>m.getLatLng());if(coords.length===1)map.setView(coords[0],8);else if(coords.length>1)map.fitBounds(L.latLngBounds(coords),{padding:[55,55],maxZoom:7})}
+function focusVisible(selected){const coords=state.markers.map(m=>m.getLatLng());if(!selected&&!districtFilter.value){map.setView([39.0,35.2],6);return}if(coords.length===1)map.setView(coords[0],8);else if(coords.length>1)map.fitBounds(L.latLngBounds(coords),{padding:[55,55],maxZoom:7})}
 function bannerWidth(rep,city){const rl=[...String(rep||'')].length,cl=[...String(city||'')].length;return Math.max(86,Math.min(265,42+rl*6.4+cl*4.7))}
 function boxesOverlap(a,b){return !(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom)}
 function separateMaxZoomBanners(){
@@ -332,6 +337,7 @@ async function performExcelLoad(mode='initial'){
   await waitLoadingMinimum(4000);showLoadingError(lastLoadError||'MAPLIST.xlsx yüklenemedi. Lütfen tekrar deneyin.',!initial);return false;
 }
 repFilter.addEventListener('change',()=>{customerLookup.value='';hideCustomerLookupResults();renderMap(true)});
+districtFilter.addEventListener('change',()=>{customerLookup.value='';hideCustomerLookupResults();repFilter.value='';renderMap(true)});
 customerLookup.addEventListener('input',renderCustomerLookupResults);
 customerLookup.addEventListener('focus',()=>{if(customerLookup.value.trim())renderCustomerLookupResults()});
 customerLookup.addEventListener('keydown',e=>{if(e.key==='Escape'){hideCustomerLookupResults();customerLookup.blur()}else if(e.key==='Enter'&&customerLookupRows.length){e.preventDefault();goToCustomerOwner(customerLookupRows[0])}});
@@ -340,7 +346,16 @@ document.addEventListener('pointerdown',e=>{if(!e.target.closest('.customer-look
 refreshBtn.addEventListener('click',async()=>{if(excelLoading)return;await performExcelLoad('refresh')});
 retryLoadBtn.addEventListener('click',async()=>{if(excelLoading)return;await performExcelLoad(lastLoadingMode)});
 returnMapBtn.addEventListener('click',()=>{loadingScreen.classList.add('hide');loadingScreen.classList.remove('error','run');refreshBtn.disabled=false;setTimeout(()=>map.invalidateSize({pan:false}),250)});
-map.on('popupopen',e=>{const el=e.popup&&e.popup.getElement?e.popup.getElement():null;if(el){L.DomEvent.disableClickPropagation(el);L.DomEvent.disableScrollPropagation(el)}});
+function keepPopupInsideMap(popup){
+  const el=popup&&popup.getElement?popup.getElement():null;if(!el)return;
+  const mapEl=map.getContainer();const mapRect=mapEl.getBoundingClientRect();const popupRect=el.getBoundingClientRect();const pad=14;
+  let dx=0,dy=0;
+  const safeLeft=mapRect.left+pad,safeRight=mapRect.right-pad,safeTop=mapRect.top+pad,safeBottom=mapRect.bottom-pad;
+  if(popupRect.left<safeLeft)dx=popupRect.left-safeLeft;else if(popupRect.right>safeRight)dx=popupRect.right-safeRight;
+  if(popupRect.top<safeTop)dy=popupRect.top-safeTop;else if(popupRect.bottom>safeBottom)dy=popupRect.bottom-safeBottom;
+  if(dx||dy)map.panBy([dx,dy],{animate:true,duration:.22,easeLinearity:.5});
+}
+map.on('popupopen',e=>{const el=e.popup&&e.popup.getElement?e.popup.getElement():null;if(el){L.DomEvent.disableClickPropagation(el);L.DomEvent.disableScrollPropagation(el);requestAnimationFrame(()=>requestAnimationFrame(()=>keepPopupInsideMap(e.popup)))}});
 const customerModalEl=document.getElementById('customerModal');L.DomEvent.disableClickPropagation(customerModalEl);L.DomEvent.disableScrollPropagation(customerModalEl);
 document.getElementById('closeModal').addEventListener('click',()=>{document.getElementById('customerModal').classList.remove('show');document.getElementById('customerModal').setAttribute('aria-hidden','true')});
 document.getElementById('customerModal').addEventListener('click',e=>{if(e.target.id==='customerModal')document.getElementById('closeModal').click()});
